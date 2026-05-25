@@ -1,6 +1,6 @@
 """
 =============================================================================
-FAO SAMPLING CALCULATOR — Streamlit Web Version
+SAMPLING CALCULATOR — Streamlit Web Version
 Calculadora de Muestreo — Huella de Carbono y Agua
 
 Web port of the v7 desktop app. The calculation core, translations and PDF
@@ -163,7 +163,7 @@ def run_sampling(N, vol, strata_inputs, Z, E):
 _T = {
     "es": {
         "title":             "Calculadora de Muestreo — Huella de Carbono y Agua",
-        "subtitle":          "FAO · Sampling Calculator for Carbon & Water Footprint",
+        "subtitle":          "· Sampling Calculator for Carbon & Water Footprint",
         "method_note":       "p=0.5 como proxy inicial | IC {ci} | Error {error} | regla práctica 50% fincas + 50% volumen",
         "tab_results":       "Resultados",
         "tab_report":        "Reporte",
@@ -262,7 +262,7 @@ _T = {
     },
     "en": {
         "title":             "Sampling Calculator — Carbon & Water Footprint",
-        "subtitle":          "FAO · Sampling Calculator for Carbon & Water Footprint",
+        "subtitle":          "· Sampling Calculator for Carbon & Water Footprint",
         "method_note":       "p=0.5 as initial proxy | {ci} CI | Error {error} | practical 50% farms + 50% volume rule",
         "tab_results":       "Results",
         "tab_report":        "Report",
@@ -525,7 +525,7 @@ def export_pdf(path_or_buffer, lang, technician, company, notes, result):
     story += [_sec_hdr(t("report_ops"), W, st), ops_t, Spacer(1,12)]
 
     story += [HRFlowable(width=W, color=_c(_CM), thickness=1), Spacer(1,4),
-              Paragraph(f"FAO · Sampling Calculator for Carbon & Water Footprint  |  {now}",
+              Paragraph(f"Sampling Calculator for Carbon & Water Footprint  |  {now}",
                         st["footer"])]
     doc.build(story)
 
@@ -583,7 +583,7 @@ def build_report_text(lang, technician, company, notes, result):
 # ═══════════════════════════════════════════════════════════════════════
 
 st.set_page_config(
-    page_title="FAO Sampling Calculator",
+    page_title="Sampling Calculator",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -648,7 +648,7 @@ st.markdown("""
 # --- Header ---
 hcol1, hcol2 = st.columns([6, 1])
 with hcol1:
-    st.markdown(f"## 📊 FAO · {t('title')}")
+    st.markdown(f"## 📊  · {t('title')}")
     st.caption(t("subtitle"))
 with hcol2:
     new_lang_pick = st.radio(
@@ -904,6 +904,6 @@ with right_col:
 # --- Footer ---
 st.divider()
 st.caption(
-    f"FAO · Sampling Calculator for Carbon & Water Footprint  ·  v7 (web)  ·  "
+    f" · Sampling Calculator for Carbon & Water Footprint  ·  v7 (web)  ·  "
     f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
 )
