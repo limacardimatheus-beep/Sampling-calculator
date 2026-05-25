@@ -862,6 +862,28 @@ with right_col:
                 st.markdown(f"**{t('step3_title')}**")
                 st.latex(r"n_h = \mathrm{round}\!\left(n \cdot \frac{W_h}{\sum W}\right)")
 
+                st.markdown("**Leyenda de variables**" if lang == "es" else "**Variable legend**")
+                legend_rows = [
+                    ("n", "Tamaño total mínimo de muestra" if lang == "es" else "Minimum total sample size"),
+                    ("N", "Número total de fincas en la población" if lang == "es" else "Total number of farms in the population"),
+                    ("Z", "Valor estadístico asociado al nivel de confianza" if lang == "es" else "Statistical value associated with the confidence level"),
+                    ("E", "Margen de error aceptado" if lang == "es" else "Accepted margin of error"),
+                    ("p", "Proporción esperada de variabilidad; se usa 0.5 como proxy inicial" if lang == "es" else "Expected variability proportion; 0.5 is used as an initial proxy"),
+                    ("p(1-p)", "Varianza máxima para una proporción cuando p = 0.5" if lang == "es" else "Maximum variance for a proportion when p = 0.5"),
+                    ("h", "Estrato o categoría de muestreo" if lang == "es" else "Sampling stratum or category"),
+                    ("Fₕ", "Proporción de fincas en el estrato h" if lang == "es" else "Share of farms in stratum h"),
+                    ("Vₕ", "Proporción del volumen total en el estrato h" if lang == "es" else "Share of total volume in stratum h"),
+                    ("Wₕ", "Peso práctico del estrato h para distribuir la muestra" if lang == "es" else "Practical weight of stratum h for allocating the sample"),
+                    ("ΣW", "Suma de los pesos de todos los estratos" if lang == "es" else "Sum of weights across all strata"),
+                    ("nₕ", "Número de fincas a muestrear en el estrato h" if lang == "es" else "Number of farms to sample in stratum h"),
+                    ("CV", "Coeficiente de variación para variables continuas: σ / μ" if lang == "es" else "Coefficient of variation for continuous variables: σ / μ"),
+                ]
+                legend_df = pd.DataFrame(
+                    legend_rows,
+                    columns=["Variable", "Significado" if lang == "es" else "Meaning"]
+                )
+                st.dataframe(legend_df, hide_index=True, use_container_width=True)
+
                 st.markdown(f"**{t('cv_note_title')}**")
                 st.info(t("cv_note_body"))
 
