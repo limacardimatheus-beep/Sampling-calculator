@@ -3,13 +3,6 @@
 SAMPLING CALCULATOR — Streamlit Web Version
 Calculadora de Muestreo — Huella de Carbono y Agua
 
-Web port of the v7 desktop app. The calculation core, translations and PDF
-export are identical to the desktop version — only the UI is rewritten
-for Streamlit.
-
-Run locally:  streamlit run app_streamlit.py
-Deploy free: push to GitHub + share.streamlit.io
-Requires:    streamlit, reportlab, pandas
 =============================================================================
 """
 
@@ -236,12 +229,13 @@ _T = {
         "report_pct_pop":    "de la población",
         "report_notes":      "NOTAS / OBSERVACIONES",
         "report_ops":        "INSTRUCCIONES OPERATIVAS",
-        "report_op1":        "1. Asignar ID único a cada finca dentro de cada estrato.",
-        "report_op2":        "2. Seleccionar aleatoriamente n_h fincas dentro de cada estrato.",
-        "report_op3":        "3. Recopilar datos primarios completos de cada finca muestreada.",
-        "report_op4":        "4. Factor de expansión: media_muestra_h × N_h por estrato, ponderando resultados según población y volumen cuando corresponda.",
-        "report_op5":        "5. Suposición estadística: p=0.5 es un proxy inicial útil cuando no hay datos de variabilidad; para medias continuas de huella, revisar el tamaño muestral con CV o datos piloto cuando estén disponibles.",
-        "report_op6":        "6. Documentar la seed de randomización para trazabilidad auditora.",
+        "report_op1":        "1. Crear una lista completa de fincas, asignando un ID único a cada una.",
+        "report_op2":        "2. Clasificar cada finca en el estrato correspondiente según el criterio definido.",
+        "report_op3":        "3. Seleccionar aleatoriamente, dentro de cada estrato, el número de fincas indicado en “n Muestra”.",
+        "report_op4":        "4. Recopilar los datos primarios necesarios en cada finca seleccionada.",
+        "report_op5":        "5. Calcular los promedios por estrato y usar la distribución de fincas y volumen para interpretar los resultados.",
+        "report_op6":        "6. Si existen datos piloto, revisar la variabilidad y ajustar el tamaño de muestra usando el CV cuando corresponda.",
+        "report_op7":        "7. Documentar la lista de fincas, el criterio de estratificación y el método de selección aleatoria para trazabilidad.",
         "method_explanation":(
             "El tamaño muestral total mínimo se calcula para toda la población de fincas usando "
             "corrección de población finita y p=0.5 como proxy inicial cuando la variabilidad real "
@@ -335,12 +329,13 @@ _T = {
         "report_pct_pop":    "of population",
         "report_notes":      "NOTES / OBSERVATIONS",
         "report_ops":        "OPERATIONAL INSTRUCTIONS",
-        "report_op1":        "1. Assign a unique ID to each farm within each stratum.",
-        "report_op2":        "2. Randomly select n_h farms within each stratum.",
-        "report_op3":        "3. Collect complete primary data from every sampled farm.",
-        "report_op4":        "4. Expansion factor: sample_mean_h x N_h per stratum, weighting results by population and volume when appropriate.",
-        "report_op5":        "5. Statistical assumption: p=0.5 is a useful initial proxy when variability data are unavailable; for continuous footprint means, revisit sample size with CV or pilot data when available.",
-        "report_op6":        "6. Document the randomization seed for audit traceability.",
+        "report_op1":        "1. Create a complete list of farms, assigning a unique ID to each one.",
+        "report_op2":        "2. Classify each farm into the corresponding stratum according to the defined criterion.",
+        "report_op3":        "3. Randomly select, within each stratum, the number of farms indicated in “n Sample”.",
+        "report_op4":        "4. Collect the required primary data from each selected farm.",
+        "report_op5":        "5. Calculate averages by stratum and use the farm and volume distribution to interpret the results.",
+        "report_op6":        "6. If pilot data are available, review variability and adjust the sample size using the CV when appropriate.",
+        "report_op7":        "7. Document the farm list, the stratification criterion, and the random selection method for traceability.",
         "method_explanation":(
             "The minimum total sample is calculated for the whole farm population using finite "
             "population correction and p=0.5 as an initial proxy when real variability is still "
@@ -517,7 +512,7 @@ def export_pdf(path_or_buffer, lang, technician, company, notes, result):
             ("LEFTPADDING",(0,0),(-1,-1),12),("BOX",(0,0),(-1,-1),0.5,_c(_CMG))]))
         story += [_sec_hdr(t("report_notes"), W, st), notes_tbl, Spacer(1,8)]
 
-    ops_d = [[Paragraph(t(f"report_op{i}"), st["op"])] for i in range(1, 7)]
+    ops_d = [[Paragraph(t(f"report_op{i}"), st["op"])] for i in range(1, 8)]
     ops_t = Table(ops_d, colWidths=[W])
     ops_t.setStyle(TableStyle([("ROWBACKGROUNDS",(0,0),(-1,-1),[_c(_CLG),_c(_CWH)]),
         ("TOPPADDING",(0,0),(-1,-1),7),("BOTTOMPADDING",(0,0),(-1,-1),7),
@@ -572,7 +567,7 @@ def build_report_text(lang, technician, company, notes, result):
             out.append("  " + line)
         out.append("")
     out += [sep, "  " + t("report_ops"), sep]
-    for i in range(1, 7):
+    for i in range(1, 8):
         out.append("  " + t(f"report_op{i}"))
     out += ["", SEP]
     return "\n".join(out)
