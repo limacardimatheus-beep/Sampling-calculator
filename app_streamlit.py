@@ -3,6 +3,13 @@
 SAMPLING CALCULATOR — Streamlit Web Version
 Calculadora de Muestreo — Huella de Carbono y Agua
 
+Web port of the v7 desktop app. The calculation core, translations and PDF
+export are identical to the desktop version — only the UI is rewritten
+for Streamlit.
+
+Run locally:  streamlit run app_streamlit.py
+Deploy free: push to GitHub + share.streamlit.io
+Requires:    streamlit, reportlab, pandas
 =============================================================================
 """
 
@@ -229,13 +236,13 @@ _T = {
         "report_pct_pop":    "de la población",
         "report_notes":      "NOTAS / OBSERVACIONES",
         "report_ops":        "INSTRUCCIONES OPERATIVAS",
-        "report_op1":        "1. Crear una lista completa de fincas, asignando un ID único a cada una.",
-        "report_op2":        "2. Clasificar cada finca en el estrato correspondiente según el criterio definido.",
-        "report_op3":        "3. Seleccionar aleatoriamente, dentro de cada estrato, el número de fincas indicado en “n Muestra”.",
-        "report_op4":        "4. Recopilar los datos primarios necesarios en cada finca seleccionada.",
-        "report_op5":        "5. Calcular los promedios por estrato y usar la distribución de fincas y volumen para interpretar los resultados.",
-        "report_op6":        "6. Si existen datos piloto, revisar la variabilidad y ajustar el tamaño de muestra usando el CV cuando corresponda.",
-        "report_op7":        "7. Documentar la lista de fincas, el criterio de estratificación y el método de selección aleatoria para trazabilidad.",
+        "report_op1":        "1. Preparar la lista de fincas: crear una lista completa de todas las fincas incluidas en el estudio. Cada finca debe tener un código o ID único.",
+        "report_op2":        "2. Clasificar las fincas por estrato: asignar cada finca a su estrato correspondiente, según el criterio definido por el usuario, como productividad, tipo de producción, riego, sistema de manejo u otra categoría relevante.",
+        "report_op3":        "3. Seleccionar las fincas de forma aleatoria: dentro de cada estrato, seleccionar aleatoriamente el número de fincas indicado en la columna “n Muestra”.",
+        "report_op4":        "4. Recopilar la información de campo: para cada finca seleccionada, recopilar los datos primarios necesarios para calcular la huella de carbono y/o agua.",
+        "report_op5":        "5. Usar los resultados por estrato: calcular los resultados promedio de las fincas muestreadas dentro de cada estrato. Luego, usar el número total de fincas y el volumen de cada estrato para interpretar o expandir los resultados.",
+        "report_op6":        "6. Revisar la precisión si hay datos piloto: si existen datos previos o datos piloto, revisar la variabilidad entre fincas. Para variables continuas, como emisiones o uso de agua, el tamaño de muestra puede ajustarse usando el coeficiente de variación (CV).",
+        "report_op7":        "7. Documentar el procedimiento: guardar la lista de fincas, el criterio usado para definir los estratos, el método de selección aleatoria y, si se usa, la semilla de randomización. Esto permite repetir y auditar el proceso.",
         "method_explanation":(
             "El tamaño muestral total mínimo se calcula para toda la población de fincas usando "
             "corrección de población finita y p=0.5 como proxy inicial cuando la variabilidad real "
@@ -329,13 +336,13 @@ _T = {
         "report_pct_pop":    "of population",
         "report_notes":      "NOTES / OBSERVATIONS",
         "report_ops":        "OPERATIONAL INSTRUCTIONS",
-        "report_op1":        "1. Create a complete list of farms, assigning a unique ID to each one.",
-        "report_op2":        "2. Classify each farm into the corresponding stratum according to the defined criterion.",
-        "report_op3":        "3. Randomly select, within each stratum, the number of farms indicated in “n Sample”.",
-        "report_op4":        "4. Collect the required primary data from each selected farm.",
-        "report_op5":        "5. Calculate averages by stratum and use the farm and volume distribution to interpret the results.",
-        "report_op6":        "6. If pilot data are available, review variability and adjust the sample size using the CV when appropriate.",
-        "report_op7":        "7. Document the farm list, the stratification criterion, and the random selection method for traceability.",
+        "report_op1":        "1. Prepare the farm list: create a complete list of all farms included in the study. Each farm should have a unique code or ID.",
+        "report_op2":        "2. Classify farms by stratum: assign each farm to its corresponding stratum according to the criterion defined by the user, such as productivity, production type, irrigation, management system, or another relevant category.",
+        "report_op3":        "3. Select farms randomly: within each stratum, randomly select the number of farms indicated in the “n Sample” column.",
+        "report_op4":        "4. Collect field information: for each selected farm, collect the primary data needed to calculate the carbon and/or water footprint.",
+        "report_op5":        "5. Use results by stratum: calculate the average results of the sampled farms within each stratum. Then use the total number of farms and the volume of each stratum to interpret or expand the results.",
+        "report_op6":        "6. Review precision if pilot data are available: if previous data or pilot data exist, review variability across farms. For continuous variables, such as emissions or water use, the sample size can be adjusted using the coefficient of variation (CV).",
+        "report_op7":        "7. Document the procedure: save the farm list, the criterion used to define the strata, the random selection method, and, if used, the randomization seed. This allows the process to be repeated and audited.",
         "method_explanation":(
             "The minimum total sample is calculated for the whole farm population using finite "
             "population correction and p=0.5 as an initial proxy when real variability is still "
