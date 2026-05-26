@@ -164,7 +164,7 @@ _T = {
     "es": {
         "title":             "Calculadora de Muestreo — Huella de Carbono y Agua",
         "subtitle":          "· Sampling Calculator for Carbon & Water Footprint",
-        "method_note":       "p=0.5 como proxy inicial | IC {ci} | Error {error} | regla práctica 50% fincas + 50% volumen",
+        "method_note":       "p=0.5 como supuesto inicial de variabilidad | IC {ci} | Error {error} | regla práctica 50% fincas + 50% volumen",
         "tab_results":       "Resultados",
         "tab_report":        "Reporte",
         "sec_info":          "TÉCNICO Y ORGANIZACIÓN",
@@ -182,9 +182,9 @@ _T = {
         "col_pct_farms":     "% Fincas",
         "col_pct_vol":       "% Volumen",
         "col_n_h":           "N fincas",
-        "col_n_sample":      "n Muestra",
+        "col_n_sample":      "Fincas a muestrear",
         "col_vol_pct":       "Vol %",
-        "col_weight":        "Peso",
+        "col_weight":        "Peso de asignación",
         "stratum_high":      "Alta productividad",
         "stratum_med":       "Media productividad",
         "stratum_low":       "Baja productividad",
@@ -223,8 +223,8 @@ _T = {
         "report_params":     "PARÁMETROS ESTADÍSTICOS",
         "report_ci":         "Nivel de confianza",
         "report_error":      "Margen de error",
-        "report_method":     "Método de varianza",
-        "report_method_val": "Tamaño muestral total con corrección de población finita y p=0.5 como proxy inicial; asignación por estrato mediante regla práctica 50% fincas + 50% volumen, no óptimo de Neyman",
+        "report_method":     "Método de cálculo",
+        "report_method_val": "El tamaño total de muestra se calcula para una población finita usando p=0.5 como supuesto inicial. Luego, la muestra se distribuye entre estratos combinando 50% número de fincas y 50% volumen. Esta regla es práctica y debe revisarse si existen datos piloto.",
         "report_formula":    "Fórmula",
         "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = n × W_h / ΣW",
         "report_pop":        "POBLACIÓN",
@@ -238,14 +238,14 @@ _T = {
         "report_ops":        "INSTRUCCIONES OPERATIVAS",
         "report_op1":        "1. Preparar la lista de fincas: crear una lista completa de todas las fincas incluidas en el estudio. Cada finca debe tener un código o ID único.",
         "report_op2":        "2. Clasificar las fincas por estrato: asignar cada finca a su estrato correspondiente, según el criterio definido por el usuario, como productividad, tipo de producción, riego, sistema de manejo u otra categoría relevante.",
-        "report_op3":        "3. Seleccionar las fincas de forma aleatoria: dentro de cada estrato, seleccionar aleatoriamente el número de fincas indicado en la columna “n Muestra”.",
+        "report_op3":        "3. Seleccionar las fincas de forma aleatoria: dentro de cada estrato, seleccionar aleatoriamente el número de fincas indicado en la columna “Fincas a muestrear”.",
         "report_op4":        "4. Recopilar la información de campo: para cada finca seleccionada, recopilar los datos primarios necesarios para calcular la huella de carbono y/o agua.",
         "report_op5":        "5. Usar los resultados por estrato: calcular los resultados promedio de las fincas muestreadas dentro de cada estrato. Luego, usar el número total de fincas y el volumen de cada estrato para interpretar o expandir los resultados.",
         "report_op6":        "6. Revisar la precisión si hay datos piloto: si existen datos previos o datos piloto, revisar la variabilidad entre fincas. Para variables continuas, como emisiones o uso de agua, el tamaño de muestra puede ajustarse usando el coeficiente de variación (CV).",
         "report_op7":        "7. Documentar el procedimiento: guardar la lista de fincas, el criterio usado para definir los estratos, el método de selección aleatoria y, si se usa, la semilla de randomización. Esto permite repetir y auditar el proceso.",
         "method_explanation":(
             "El tamaño muestral total mínimo se calcula para toda la población de fincas usando "
-            "corrección de población finita y p=0.5 como proxy inicial cuando la variabilidad real "
+            "corrección de población finita y p=0.5 como supuesto inicial de variabilidad cuando la variabilidad real "
             "aún no se conoce. Para variables continuas como huella de carbono o agua, esta precisión "
             "debe revisarse cuando existan datos piloto o un coeficiente de variación (CV) por estrato. "
             "La regla 50/50 fincas-volumen no es un óptimo de Neyman; es un compromiso transparente "
@@ -254,7 +254,7 @@ _T = {
         "step1_title": "1) Tamaño total mínimo de muestra",
         "step2_title": "2) Peso de asignación de cada estrato",
         "step3_title": "3) Muestra asignada al estrato",
-        "cv_note_title": "Nota para variables continuas",
+        "cv_note_title": "Cuando existan datos piloto",
         "cv_note_body": "Para indicadores de huella, el tamaño de muestra depende de la variabilidad entre fincas. Si existen datos piloto, use el coeficiente de variación (CV = desviación estándar ÷ promedio) para ajustar el tamaño de muestra. Mayor variabilidad requiere más muestras.",
         "generated":         "Generado",
         "ton_year":          "ton/año",
@@ -264,7 +264,7 @@ _T = {
     "en": {
         "title":             "Sampling Calculator — Carbon & Water Footprint",
         "subtitle":          "· Sampling Calculator for Carbon & Water Footprint",
-        "method_note":       "p=0.5 as initial proxy | {ci} CI | Error {error} | practical 50% farms + 50% volume rule",
+        "method_note":       "p=0.5 as an initial variability assumption | {ci} CI | Error {error} | practical 50% farms + 50% volume rule",
         "tab_results":       "Results",
         "tab_report":        "Report",
         "sec_info":          "TECHNICIAN & ORGANIZATION",
@@ -282,9 +282,9 @@ _T = {
         "col_pct_farms":     "% Farms",
         "col_pct_vol":       "% Volume",
         "col_n_h":           "N farms",
-        "col_n_sample":      "n Sample",
+        "col_n_sample":      "Farms to sample",
         "col_vol_pct":       "Vol %",
-        "col_weight":        "Weight",
+        "col_weight":        "Allocation weight",
         "stratum_high":      "High productivity",
         "stratum_med":       "Medium productivity",
         "stratum_low":       "Low productivity",
@@ -323,8 +323,8 @@ _T = {
         "report_params":     "STATISTICAL PARAMETERS",
         "report_ci":         "Confidence level",
         "report_error":      "Margin of error",
-        "report_method":     "Variance method",
-        "report_method_val": "Total sample size with finite population correction and p=0.5 as an initial proxy; stratum allocation uses a practical 50% farms + 50% volume rule, not Neyman-optimal allocation",
+        "report_method":     "Calculation method",
+        "report_method_val": "The total sample size is calculated for a finite population using p=0.5 as an initial assumption. The sample is then distributed across strata by combining 50% number of farms and 50% volume. This is a practical rule and should be reviewed if pilot data are available.",
         "report_formula":    "Formula",
         "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = n × W_h / ΣW",
         "report_pop":        "POPULATION",
@@ -338,14 +338,14 @@ _T = {
         "report_ops":        "OPERATIONAL INSTRUCTIONS",
         "report_op1":        "1. Prepare the farm list: create a complete list of all farms included in the study. Each farm should have a unique code or ID.",
         "report_op2":        "2. Classify farms by stratum: assign each farm to its corresponding stratum according to the criterion defined by the user, such as productivity, production type, irrigation, management system, or another relevant category.",
-        "report_op3":        "3. Select farms randomly: within each stratum, randomly select the number of farms indicated in the “n Sample” column.",
+        "report_op3":        "3. Select farms randomly: within each stratum, randomly select the number of farms indicated in the “Farms to sample” column.",
         "report_op4":        "4. Collect field information: for each selected farm, collect the primary data needed to calculate the carbon and/or water footprint.",
         "report_op5":        "5. Use results by stratum: calculate the average results of the sampled farms within each stratum. Then use the total number of farms and the volume of each stratum to interpret or expand the results.",
         "report_op6":        "6. Review precision if pilot data are available: if previous data or pilot data exist, review variability across farms. For continuous variables, such as emissions or water use, the sample size can be adjusted using the coefficient of variation (CV).",
         "report_op7":        "7. Document the procedure: save the farm list, the criterion used to define the strata, the random selection method, and, if used, the randomization seed. This allows the process to be repeated and audited.",
         "method_explanation":(
             "The minimum total sample is calculated for the whole farm population using finite "
-            "population correction and p=0.5 as an initial proxy when real variability is still "
+            "population correction and p=0.5 as an initial variability assumption when real variability is still "
             "unknown. For continuous variables such as carbon or water footprint, this precision "
             "should be revisited when pilot data or a coefficient of variation (CV) by stratum "
             "become available. The 50/50 farms-volume rule is not Neyman-optimal; it is a "
@@ -354,7 +354,7 @@ _T = {
         "step1_title": "1) Minimum total sample size",
         "step2_title": "2) Allocation weight per stratum",
         "step3_title": "3) Sample allocated to stratum",
-        "cv_note_title": "Note for continuous variables",
+        "cv_note_title": "When pilot data are available",
         "cv_note_body": "For footprint indicators, sample size depends on variability between farms. If pilot data are available, use the coefficient of variation (CV = standard deviation ÷ mean) to refine the sample size. Higher variability requires more samples.",
         "generated":         "Generated",
         "ton_year":          "ton/year",
