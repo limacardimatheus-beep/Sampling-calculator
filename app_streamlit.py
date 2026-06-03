@@ -229,6 +229,16 @@ _T = {
         "report_method_val": "El tamaño total de muestra se calcula para una población finita usando p=0.5 como valor conservador que maximiza el tamaño de muestra. Luego, la muestra se distribuye entre estratos combinando 50% número de fincas y 50% volumen. Esta regla es práctica y debe revisarse si existen datos piloto.",
         "report_scope":      "Alcance",
         "report_scope_val":  "Dimensiona la muestra para estimar una proporción con precisión aceptable; no garantiza estimar una media de variable continua, lo que requeriría el CV por estrato.",
+        "report_domains":    "CUANDO LOS ESTRATOS SON DOMINIOS",
+        "report_domains_val":(
+            "Si desea obtener estimaciones confiables para cada estrato (que se convierte, en este caso, "
+            "en su dominio de estimación), puede aplicar la fórmula del Punto 1 a cada estrato, donde p es "
+            "la proporción de variabilidad esperada en cada estrato (use 0.5 solo si no se dispone de otra "
+            "información). Luego puede sumar los tamaños de muestra obtenidos en cada estrato para obtener el "
+            "tamaño total de muestra, que suele ser mayor que el obtenido siguiendo el enfoque propuesto "
+            "anteriormente. Esta solución es más precisa porque se alcanza precisión en cada estrato/dominio, "
+            "pero suele ser más costosa."
+        ),
         "report_formula":    "Fórmula",
         "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = round(n × W_h)   (ΣW = 1, ya que F_h y V_h suman 1)",
         "report_pop":        "POBLACIÓN",
@@ -334,6 +344,16 @@ _T = {
         "report_method_val": "The total sample size is calculated for a finite population using p=0.5 as a conservative value that maximises the sample size. The sample is then distributed across strata by combining 50% number of farms and 50% volume. This is a practical rule and should be reviewed if pilot data are available.",
         "report_scope":      "Scope",
         "report_scope_val":  "Sizes the sample to estimate a proportion with acceptable accuracy; it does not guarantee estimating a mean of a continuous variable, which would require the CV per stratum.",
+        "report_domains":    "WHEN STRATA ARE DOMAINS",
+        "report_domains_val":(
+            "If you would like to obtain reliable estimates for each stratum (which becomes, in this case, "
+            "your estimation domain) you can apply formula in Point 1 for each stratum where p is the expected "
+            "variability proportion in each stratum (set equal to 0.5 only if no other information on it is "
+            "available). Then you can sum up the sample sizes obtained in each stratum to get the total sample "
+            "size, which is usually higher than that obtained following the approach proposed above. This "
+            "solution is more accurate because precision is reached in each stratum/domain but it is usually "
+            "more expensive."
+        ),
         "report_formula":    "Formula",
         "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = round(n × W_h)   (ΣW = 1, since F_h and V_h each sum to 1)",
         "report_pop":        "POPULATION",
@@ -525,6 +545,13 @@ def export_pdf(path_or_buffer, lang, technician, company, notes, result):
                     f"({result.pct_sample:.1f}% {t('report_pct_pop')})")], W, st),
               Spacer(1,8)]
 
+    domains_tbl = Table([[Paragraph(t("report_domains_val"), st["note"])]], colWidths=[W])
+    domains_tbl.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),_c(_CLG)),
+        ("TOPPADDING",(0,0),(-1,-1),10),("BOTTOMPADDING",(0,0),(-1,-1),10),
+        ("LEFTPADDING",(0,0),(-1,-1),12),("RIGHTPADDING",(0,0),(-1,-1),12),
+        ("BOX",(0,0),(-1,-1),0.5,_c(_CMG))]))
+    story += [_sec_hdr(t("report_domains"), W, st), domains_tbl, Spacer(1,8)]
+
     if notes.strip():
         notes_tbl = Table([[Paragraph(notes.replace("\n","<br/>"), st["note"])]], colWidths=[W])
         notes_tbl.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),_c(_CLG)),
@@ -550,6 +577,9 @@ def export_pdf(path_or_buffer, lang, technician, company, notes, result):
 # ═══════════════════════════════════════════════════════════════════════
 
 def build_report_text(lang, technician, company, notes, result):
+    import textwrap
+    def _wrap(s, width):
+        return textwrap.wrap(s, width=width) or [""]
     t = lambda k, **kw: tr(lang, k, **kw)
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     zs = {1.96:"95%", 1.645:"90%", 2.576:"99%"}.get(result.Z, "95%")
@@ -583,6 +613,10 @@ def build_report_text(lang, technician, company, notes, result):
     out += [sep, "  " + t("report_result"), sep]
     out.append(f"{t('report_nfinal')}:  {result.n_total} {t('farms')}  "
                f"({result.pct_sample:.1f}% {t('report_pct_pop')})")
+    out.append("")
+    out += [sep, "  " + t("report_domains"), sep]
+    for line in _wrap(t("report_domains_val"), 63):
+        out.append("  " + line)
     out.append("")
     if notes and notes.strip():
         out += [sep, "  " + t("report_notes"), sep]
@@ -896,11 +930,11 @@ with right_col:
                     ("N", "Número total de fincas en la población" if lang == "es" else "Total number of farms in the population"),
                     ("Z", "Valor estadístico asociado al nivel de confianza" if lang == "es" else "Statistical value associated with the confidence level"),
                     ("E", "Margen de error absoluto aceptado" if lang == "es" else "Accepted absolute margin of error"),
-                    ("p", "Valor esperado de la proporción a estimar; se usa 0.5 como valor conservador cuando es desconocido" if lang == "es" else "Expected value of the proportion to estimate; 0.5 is used as a conservative value when unknown"),
-                    ("p(1-p)", "Varianza poblacional de una proporción; es máxima cuando p = 0.5" if lang == "es" else "Population variance of a proportion; maximum when p = 0.5"),
+                    ("p", "Proporción de variabilidad esperada; se usa 0.5 como valor conservador para varianza máxima" if lang == "es" else "Expected variability proportion; 0.5 is used as a conservative value for maximum variance"),
+                    ("p(1-p)", "Varianza poblacional de una proporción" if lang == "es" else "Population variance for a proportion"),
                     ("h", "Estrato o categoría de muestreo" if lang == "es" else "Sampling stratum or category"),
-                    ("Fₕ", "Proporción de fincas en el estrato h" if lang == "es" else "Share of farms in stratum h"),
-                    ("Vₕ", "Proporción del volumen total en el estrato h" if lang == "es" else "Share of total volume in stratum h"),
+                    ("Fₕ", "Proporción de fincas en el estrato h (número de fincas en el estrato dividido entre el número total de fincas)" if lang == "es" else "Share of farms in stratum h (number of farms in the stratum divided by total number of farms)"),
+                    ("Vₕ", "Proporción del volumen total en el estrato h (suma de volúmenes en el estrato dividida entre la suma de volúmenes de la población de fincas)" if lang == "es" else "Share of total volume in stratum h (sum of volumes in stratum divided by sum of volumes in farms population)"),
                     ("Wₕ", "Peso práctico del estrato h para distribuir la muestra" if lang == "es" else "Practical weight of stratum h for allocating the sample"),
                     ("nₕ", "Número de fincas a muestrear en el estrato h" if lang == "es" else "Number of farms to sample in stratum h"),
                     ("CV", "Coeficiente de variación para variables continuas: σ / μ" if lang == "es" else "Coefficient of variation for continuous variables: σ / μ"),
@@ -915,6 +949,9 @@ with right_col:
                 st.info(t("cv_note_body"))
 
                 st.markdown(t("method_explanation"))
+
+                st.markdown(f"**{t('report_domains')}**")
+                st.markdown(t("report_domains_val"))
 
         # ---------- Report tab ----------
         with tab_report:
