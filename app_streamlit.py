@@ -897,8 +897,6 @@ with right_col:
             m3.metric(t("res_pct"),      f"{result.pct_sample:.1f}%")
             m4.metric(t("res_error"),    f"±{int(result.E*100)}%")
 
-            st.caption("ℹ " + t("scope_note"))
-
             st.markdown(f"#### {t('strata_title')}")
             df = pd.DataFrame([{
                 t("col_stratum"):   s.name,
