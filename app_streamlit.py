@@ -175,7 +175,8 @@ _T = {
         "technician_label":  "Técnico responsable",
         "company_label":     "Organización / Empresa",
         "n_label":           "Número total de fincas (N)",
-        "vol_label":         "Volumen exportado (ton/año)",
+        "vol_label":         "Volumen exportado (ton/año) — opcional",
+        "vol_help":          "Opcional. Si no se conoce, déjelo en 0; no afecta el cálculo de la muestra, solo aparece en el reporte.",
         "ci_label":          "Nivel de confianza",
         "error_label":       "Margen de error",
         "col_stratum":       "Estrato",
@@ -213,6 +214,7 @@ _T = {
         "strata_note":       "El usuario debe definir estratos/categorías que expliquen diferencias relevantes entre fincas: tipo de producción, productividad, orgánico vs. convencional, con o sin riego, zona agroecológica, tamaño de finca o sistema de manejo. Use las notas para justificar la elección.",
         "placeholder_title": "Sin resultados",
         "placeholder_body":  "Complete los datos para ver el plan de muestreo.",
+        "scope_note":        "Alcance del método: el tamaño de muestra se calcula para estimar una PROPORCIÓN (p. ej., la proporción de fincas por encima de un umbral) con precisión aceptable usando p=0.5 como valor conservador. NO garantiza estimar una MEDIA (p. ej., la huella promedio por finca) con precisión aceptable. Para estimar medias de variables continuas se necesita el coeficiente de variación (CV) por estrato a partir de datos piloto o registros.",
         "report_title":      "REPORTE DE MUESTREO — HUELLA DE CARBONO Y AGUA",
         "report_norm":       "Marco normativo",
         "report_norm_val":   "Finite population sampling with stratified allocation",
@@ -224,9 +226,11 @@ _T = {
         "report_ci":         "Nivel de confianza",
         "report_error":      "Margen de error",
         "report_method":     "Método de cálculo",
-        "report_method_val": "El tamaño total de muestra se calcula para una población finita usando p=0.5 como supuesto inicial. Luego, la muestra se distribuye entre estratos combinando 50% número de fincas y 50% volumen. Esta regla es práctica y debe revisarse si existen datos piloto.",
+        "report_method_val": "El tamaño total de muestra se calcula para una población finita usando p=0.5 como valor conservador que maximiza el tamaño de muestra. Luego, la muestra se distribuye entre estratos combinando 50% número de fincas y 50% volumen. Esta regla es práctica y debe revisarse si existen datos piloto.",
+        "report_scope":      "Alcance",
+        "report_scope_val":  "Dimensiona la muestra para estimar una proporción con precisión aceptable; no garantiza estimar una media de variable continua, lo que requeriría el CV por estrato.",
         "report_formula":    "Fórmula",
-        "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = n × W_h / ΣW",
+        "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = round(n × W_h)   (ΣW = 1, ya que F_h y V_h suman 1)",
         "report_pop":        "POBLACIÓN",
         "report_n":          "Total fincas (N)",
         "report_vol":        "Volumen total",
@@ -245,8 +249,9 @@ _T = {
         "report_op7":        "7. Documentar el procedimiento: guardar la lista de fincas, el criterio usado para definir los estratos, el método de selección aleatoria y, si se usa, la semilla de randomización. Esto permite repetir y auditar el proceso.",
         "method_explanation":(
             "El tamaño muestral total mínimo se calcula para toda la población de fincas usando "
-            "corrección de población finita y p=0.5 como supuesto inicial de variabilidad cuando la variabilidad real "
-            "aún no se conoce. Para variables continuas como huella de carbono o agua, esta precisión "
+            "corrección de población finita y p=0.5 como valor conservador que maximiza el tamaño de muestra cuando la "
+            "variabilidad real aún no se conoce. Este tamaño dimensiona la estimación de una proporción; "
+            "para variables continuas como huella de carbono o agua, la precisión de una media "
             "debe revisarse cuando existan datos piloto o un coeficiente de variación (CV) por estrato. "
             "La regla 50/50 fincas-volumen no es un óptimo de Neyman; es un compromiso transparente "
             "para planificación cuando no hay estimaciones de desviación estándar por estrato."
@@ -264,7 +269,7 @@ _T = {
     "en": {
         "title":             "Sampling Calculator — Carbon & Water Footprint",
         "subtitle":          "· Sampling Calculator for Carbon & Water Footprint",
-        "method_note":       "p=0.5 as an initial variability assumption | {ci} CI | Error {error} | practical 50% farms + 50% volume rule",
+        "method_note":       "p=0.5 as a conservative value | {ci} CI | Error {error} | practical 50% farms + 50% volume rule",
         "tab_results":       "Results",
         "tab_report":        "Report",
         "sec_info":          "TECHNICIAN & ORGANIZATION",
@@ -275,7 +280,8 @@ _T = {
         "technician_label":  "Responsible technician",
         "company_label":     "Organization / Company",
         "n_label":           "Total number of farms (N)",
-        "vol_label":         "Exported volume (ton/year)",
+        "vol_label":         "Exported volume (ton/year) — optional",
+        "vol_help":          "Optional. If unknown, leave it at 0; it does not affect the sample-size calculation, it only appears in the report.",
         "ci_label":          "Confidence level",
         "error_label":       "Margin of error",
         "col_stratum":       "Stratum",
@@ -313,6 +319,7 @@ _T = {
         "strata_note":       "Define strata/categories that explain relevant differences among farms: production type, productivity, organic vs. conventional, irrigated vs. non-irrigated, agroecological zone, farm size, or management system. Use the notes to justify the choice.",
         "placeholder_title": "No results yet",
         "placeholder_body":  "Fill in the data to see the sampling plan.",
+        "scope_note":        "Method scope: the sample size is computed to estimate a PROPORTION (e.g., the share of farms above a threshold) with acceptable accuracy using p=0.5 as a conservative value. It does NOT guarantee estimating a MEAN (e.g., the average per-farm footprint) with acceptable precision. Estimating means of continuous variables requires the coefficient of variation (CV) per stratum from pilot data or registers.",
         "report_title":      "SAMPLING REPORT — CARBON & WATER FOOTPRINT",
         "report_norm":       "Normative framework",
         "report_norm_val":   "Finite population sampling with stratified allocation",
@@ -324,9 +331,11 @@ _T = {
         "report_ci":         "Confidence level",
         "report_error":      "Margin of error",
         "report_method":     "Calculation method",
-        "report_method_val": "The total sample size is calculated for a finite population using p=0.5 as an initial assumption. The sample is then distributed across strata by combining 50% number of farms and 50% volume. This is a practical rule and should be reviewed if pilot data are available.",
+        "report_method_val": "The total sample size is calculated for a finite population using p=0.5 as a conservative value that maximises the sample size. The sample is then distributed across strata by combining 50% number of farms and 50% volume. This is a practical rule and should be reviewed if pilot data are available.",
+        "report_scope":      "Scope",
+        "report_scope_val":  "Sizes the sample to estimate a proportion with acceptable accuracy; it does not guarantee estimating a mean of a continuous variable, which would require the CV per stratum.",
         "report_formula":    "Formula",
-        "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = n × W_h / ΣW",
+        "report_formula_val":"n = [N × Z² × p × (1-p)] / [E² × (N-1) + Z² × p × (1-p)]\nW_h = 0.5 × F_h + 0.5 × V_h\nn_h = round(n × W_h)   (ΣW = 1, since F_h and V_h each sum to 1)",
         "report_pop":        "POPULATION",
         "report_n":          "Total farms (N)",
         "report_vol":        "Total volume",
@@ -345,8 +354,9 @@ _T = {
         "report_op7":        "7. Document the procedure: save the farm list, the criterion used to define the strata, the random selection method, and, if used, the randomization seed. This allows the process to be repeated and audited.",
         "method_explanation":(
             "The minimum total sample is calculated for the whole farm population using finite "
-            "population correction and p=0.5 as an initial variability assumption when real variability is still "
-            "unknown. For continuous variables such as carbon or water footprint, this precision "
+            "population correction and p=0.5 as a conservative value that maximises the sample size when real "
+            "variability is still unknown. This size dimensions the estimation of a proportion; "
+            "for continuous variables such as carbon or water footprint, the precision of a mean "
             "should be revisited when pilot data or a coefficient of variation (CV) by stratum "
             "become available. The 50/50 farms-volume rule is not Neyman-optimal; it is a "
             "transparent planning compromise when stratum standard deviations are unavailable."
@@ -433,6 +443,8 @@ def export_pdf(path_or_buffer, lang, technician, company, notes, result):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     z_label = {1.96:"95%", 1.645:"90%", 2.576:"99%"}.get(result.Z, "95%")
     e_label = f"+-{int(result.E*100)}%"
+    vol_str = (f"{int(result.vol):,} {t('ton_year')}"
+               if result.vol and result.vol > 0 else t("na"))
     doc = SimpleDocTemplate(path_or_buffer, pagesize=A4,
                             leftMargin=2*cm, rightMargin=2*cm,
                             topMargin=2*cm, bottomMargin=2*cm)
@@ -458,12 +470,13 @@ def export_pdf(path_or_buffer, lang, technician, company, notes, result):
     story += [_sec_hdr(t("report_params"), W, st),
               _kv([(t("report_ci"),    f"{z_label} (Z={result.Z})"),
                    (t("report_error"), e_label),
-                   (t("report_method"),t("report_method_val"))], W, st),
+                   (t("report_method"),t("report_method_val")),
+                   (t("report_scope"), t("report_scope_val"))], W, st),
               Spacer(1,8)]
 
     story += [_sec_hdr(t("report_pop"), W, st),
               _kv([(t("report_n"),   str(result.N)),
-                   (t("report_vol"), f"{int(result.vol):,} {t('ton_year')}")], W, st),
+                   (t("report_vol"), vol_str)], W, st),
               Spacer(1,8)]
 
     box_w = W / 4
@@ -543,6 +556,8 @@ def build_report_text(lang, technician, company, notes, result):
     el = f"+-{int(result.E*100)}%"
     tech = (technician or "").strip() or t("na")
     comp = (company or "").strip() or t("na")
+    vol_str = (f"{int(result.vol):,} {t('ton_year')}"
+               if result.vol and result.vol > 0 else t("na"))
     SEP = "=" * 65
     sep = "-" * 65
     out = []
@@ -555,10 +570,11 @@ def build_report_text(lang, technician, company, notes, result):
     out += [sep, "  " + t("report_params"), sep]
     out += [f"{t('report_ci')}:        {zs} (Z={result.Z})",
             f"{t('report_error')}:     {el}",
-            f"{t('report_method')}:    {t('report_method_val')}", ""]
+            f"{t('report_method')}:    {t('report_method_val')}",
+            f"{t('report_scope')}:     {t('report_scope_val')}", ""]
     out += [sep, "  " + t("report_pop"), sep]
     out += [f"{t('report_n')}:         {result.N}",
-            f"{t('report_vol')}:       {int(result.vol):,} {t('ton_year')}", ""]
+            f"{t('report_vol')}:       {vol_str}", ""]
     out += [sep, "  " + t("report_strata"), sep]
     for s in result.strata:
         out.append(f"  {s.name:<28}  N_h={s.N_h:<5} n={s.n_h:<5} "
@@ -694,7 +710,8 @@ with left_col:
         st.markdown(f"**{t('sec_org')}**")
         c1, c2 = st.columns(2)
         N   = c1.number_input(t("n_label"),   min_value=1,   value=340,     step=1,    key="N_in")
-        vol = c2.number_input(t("vol_label"), min_value=0.0, value=50000.0, step=100.0, key="vol_in")
+        vol = c2.number_input(t("vol_label"), min_value=0.0, value=0.0,     step=100.0,
+                              key="vol_in", help=t("vol_help"))
 
     with st.container(border=True):
         st.markdown(f"**{t('sec_strata')}**")
@@ -768,11 +785,11 @@ with left_col:
         st.markdown(f"**{t('sec_params')}**")
         c1, c2 = st.columns(2)
         ci_choices  = ["95%  (Z=1.96)", "90%  (Z=1.645)", "99%  (Z=2.576)"]
-        err_choices = ["±10%", "±15%", "±20%"]
+        err_choices = ["±5%", "±10%", "±15%", "±20%"]
         ci_label  = c1.selectbox(t("ci_label"),    ci_choices,  index=0, key="ci_in")
-        err_label = c2.selectbox(t("error_label"), err_choices, index=0, key="err_in")
+        err_label = c2.selectbox(t("error_label"), err_choices, index=1, key="err_in")
         Z = {"95%  (Z=1.96)": 1.96, "90%  (Z=1.645)": 1.645, "99%  (Z=2.576)": 2.576}[ci_label]
-        E = {"±10%": 0.10, "±15%": 0.15, "±20%": 0.20}[err_label]
+        E = {"±5%": 0.05, "±10%": 0.10, "±15%": 0.15, "±20%": 0.20}[err_label]
 
     with st.container(border=True):
         st.markdown(f"**{t('notes_label')}**")
@@ -807,8 +824,8 @@ with right_col:
     errors = []
     if N < 3:
         errors.append(t("val_n_min"))
-    if vol <= 0:
-        errors.append(t("val_vol_min"))
+    # Exported volume is OPTIONAL — it does not enter the calculation, only the
+    # report. No validation error when it is left at 0 / unavailable.
     sf_pct = sum(s["pct_farms"]  for s in st.session_state.strata)
     sv_pct = sum(s["pct_volume"] for s in st.session_state.strata)
     if abs(sf_pct - 100) > 0.5:
@@ -846,6 +863,8 @@ with right_col:
             m3.metric(t("res_pct"),      f"{result.pct_sample:.1f}%")
             m4.metric(t("res_error"),    f"±{int(result.E*100)}%")
 
+            st.caption("ℹ " + t("scope_note"))
+
             st.markdown(f"#### {t('strata_title')}")
             df = pd.DataFrame([{
                 t("col_stratum"):   s.name,
@@ -862,21 +881,27 @@ with right_col:
                 st.markdown(f"**{t('step2_title')}**")
                 st.latex(r"W_h = 0.5 \cdot F_h + 0.5 \cdot V_h")
                 st.markdown(f"**{t('step3_title')}**")
-                st.latex(r"n_h = \mathrm{round}\!\left(n \cdot \frac{W_h}{\sum W}\right)")
+                st.latex(r"n_h = \mathrm{round}\!\left(n \cdot W_h\right)")
+                st.caption(
+                    "ΣW = 1, ya que las proporciones de fincas (Fₕ) y de volumen (Vₕ) "
+                    "suman 1 cada una; por eso no es necesario normalizar."
+                    if lang == "es" else
+                    "ΣW = 1, since the farm shares (Fₕ) and volume shares (Vₕ) each sum "
+                    "to 1, so no normalization is needed."
+                )
 
                 st.markdown("**Leyenda de variables**" if lang == "es" else "**Variable legend**")
                 legend_rows = [
                     ("n", "Tamaño total mínimo de muestra" if lang == "es" else "Minimum total sample size"),
                     ("N", "Número total de fincas en la población" if lang == "es" else "Total number of farms in the population"),
                     ("Z", "Valor estadístico asociado al nivel de confianza" if lang == "es" else "Statistical value associated with the confidence level"),
-                    ("E", "Margen de error aceptado" if lang == "es" else "Accepted margin of error"),
-                    ("p", "Proporción esperada de variabilidad; se usa 0.5 como proxy inicial" if lang == "es" else "Expected variability proportion; 0.5 is used as an initial proxy"),
-                    ("p(1-p)", "Varianza máxima para una proporción cuando p = 0.5" if lang == "es" else "Maximum variance for a proportion when p = 0.5"),
+                    ("E", "Margen de error absoluto aceptado" if lang == "es" else "Accepted absolute margin of error"),
+                    ("p", "Valor esperado de la proporción a estimar; se usa 0.5 como valor conservador cuando es desconocido" if lang == "es" else "Expected value of the proportion to estimate; 0.5 is used as a conservative value when unknown"),
+                    ("p(1-p)", "Varianza poblacional de una proporción; es máxima cuando p = 0.5" if lang == "es" else "Population variance of a proportion; maximum when p = 0.5"),
                     ("h", "Estrato o categoría de muestreo" if lang == "es" else "Sampling stratum or category"),
                     ("Fₕ", "Proporción de fincas en el estrato h" if lang == "es" else "Share of farms in stratum h"),
                     ("Vₕ", "Proporción del volumen total en el estrato h" if lang == "es" else "Share of total volume in stratum h"),
                     ("Wₕ", "Peso práctico del estrato h para distribuir la muestra" if lang == "es" else "Practical weight of stratum h for allocating the sample"),
-                    ("ΣW", "Suma de los pesos de todos los estratos" if lang == "es" else "Sum of weights across all strata"),
                     ("nₕ", "Número de fincas a muestrear en el estrato h" if lang == "es" else "Number of farms to sample in stratum h"),
                     ("CV", "Coeficiente de variación para variables continuas: σ / μ" if lang == "es" else "Coefficient of variation for continuous variables: σ / μ"),
                 ]
@@ -928,6 +953,6 @@ with right_col:
 # --- Footer ---
 st.divider()
 st.caption(
-    f" · Sampling Calculator for Carbon & Water Footprint  ·  v7 (web)  ·  "
+    f" · Sampling Calculator for Carbon & Water Footprint  ·  v8 (web)  ·  "
     f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
 )
